@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.main_fragment.avatar_image
 
 class CompletePayFragment : Fragment() {
 
+    private lateinit var viewModel: CompletePayViewModel
+    private var mountToPay: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,5 +27,36 @@ class CompletePayFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_complete_pay, container, false)
     }
 
-    
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this).get(CompletePayViewModel::class.java)
+
+        setObversers()
+
+        getNavArgs()
+
+        Picasso.get().load(viewModel.getAvatarUrl()).transform(CropCircleTransformation())
+            .into(avatar_image);
+
+    }
+
+    fun setObversers(){
+        val price: MutableLiveData<Int?>? = viewModel.getMountToPay()
+
+        price?.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                finalMount_text.text = "Donate $${it.toString()} to me"
+                mountToPay = it
+            }
+        })
+    }
+
+    fun getNavArgs(){
+        arguments?.let {bundle ->
+            val args = CompletePayFragmentArgs.fromBundle(bundle)
+
+            viewModel.setMountToPay(args.mountToPay)
+        }
+    }
 }
