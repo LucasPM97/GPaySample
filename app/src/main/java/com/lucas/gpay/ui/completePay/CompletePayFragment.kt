@@ -41,7 +41,7 @@ class CompletePayFragment : Fragment() {
 
     }
 
-    fun setObversers(){
+    private fun setObversers(){
         val price: MutableLiveData<Int?>? = viewModel.getMountToPay()
 
         price?.observe(viewLifecycleOwner, Observer {

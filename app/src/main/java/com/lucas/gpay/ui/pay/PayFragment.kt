@@ -38,14 +38,7 @@ class PayFragment : Fragment() {
 
         Picasso.get().load(viewModel.getAvatarUrl()).transform(CropCircleTransformation()).into(avatar_image);
 
-        val price:MutableLiveData<Int?>? = viewModel.getMountToPay()
-
-        price?.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                priceMount_text.text = "$ ${it.toString()}"
-                mountToPay = it
-            }
-        })
+        setObservable()
 
         optionList.setOnCheckedChangeListener{ group, checkedId ->
                 val newPrice =  when(checkedId){
@@ -65,6 +58,17 @@ class PayFragment : Fragment() {
 
             findNavController().navigate(action)
         }
+    }
+
+    private fun setObservable(){
+        val price:MutableLiveData<Int?>? = viewModel.getMountToPay()
+
+        price?.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                priceMount_text.text = "$ ${it.toString()}"
+                mountToPay = it
+            }
+        })
     }
 
     override fun onAttach(context: Context) {
