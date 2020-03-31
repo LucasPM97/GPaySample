@@ -11,5 +11,5 @@
         android:drawable="@drawable/selected_button_background"
         android:state_checked="true" />
     <item
-        android:drawable="@drawable/button_background" />
+        android:drawable="@drawable/enabled_button_background" />
 </selector>
