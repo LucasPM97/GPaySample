@@ -7,22 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lucas.gpay.R
+import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import kotlinx.android.synthetic.main.fragment_pay.*
+import kotlinx.android.synthetic.main.main_fragment.avatar_image
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PayFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PayFragment : Fragment() {
+
+    private lateinit var viewModel: PayViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +27,30 @@ class PayFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pay, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(PayViewModel::class.java)
+
+        Picasso.get().load(viewModel.getAvatarUrl()).transform(CropCircleTransformation()).into(avatar_image);
+
+        val price:MutableLiveData<Int?>? = viewModel.getMountToPay()
+
+        price?.observe(viewLifecycleOwner, Observer {
+            priceMount_text.text = "$ ${it.toString()}"
+        })
+
+        optionList.setOnCheckedChangeListener{ group, checkedId ->
+                val newPrice =  when(checkedId){
+                    price1.id-> 1
+                    price2.id-> 2
+                    price3.id-> 5
+                    price4.id-> 10
+                    else -> 0
+                }
+            viewModel.setMountToPay(newPrice)
+        }
     }
 
     override fun onAttach(context: Context) {
