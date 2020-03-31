@@ -28,6 +28,7 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="100dp">
                 <RadioButton
+                    android:id="@+id/price1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -37,6 +38,7 @@
                     android:text="$1"
                     android:button="@android:color/transparent"/>
                 <RadioButton
+                    android:id="@+id/price2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -46,6 +48,7 @@
                     android:text="$2"
                     android:button="@android:color/transparent"/>
                 <RadioButton
+                    android:id="@+id/price3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -55,6 +58,7 @@
                     android:text="$5"
                     android:button="@android:color/transparent"/>
                 <RadioButton
+                    android:id="@+id/price4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -64,6 +68,27 @@
                     android:text="$10"
                     android:button="@android:color/transparent"/>
             </RadioGroup>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp"
+            android:paddingHorizontal="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:text="Total to donate"
+                android:textColor="@android:color/holo_blue_dark"/>
+            <TextView
+                android:id="@+id/priceMount_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@android:color/holo_blue_dark"/>
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 
