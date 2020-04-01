@@ -16,11 +16,27 @@
     <fragment
         android:id="@+id/payFragment"
         android:name="com.lucas.gpay.ui.pay.PayFragment"
-        android:label="fragment_pay"
+        android:label="Donate"
         tools:layout="@layout/fragment_pay" >
         <action
             android:id="@+id/action_payFragment_to_mainFragment"
             app:popUpTo="@id/mainFragment" />
+        <action
+            android:id="@+id/action_payFragment_to_completePayFragment"
+            app:destination="@id/completePayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/completePayFragment"
+        android:name="com.lucas.gpay.ui.completePay.CompletePayFragment"
+        android:label="Complete"
+        tools:layout="@layout/fragment_complete_pay" >
+        <action
+            android:id="@+id/action_completePayFragment_to_payFragment"
+            app:destination="@id/payFragment" />
+        <argument
+            android:name="mountToPay"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 
 </navigation>
