@@ -1,5 +1,6 @@
 package com.lucas.gpay
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
@@ -23,4 +24,5 @@ class MainActivity : AppCompatActivity() {
         navController.navigateUp()
         return super.onSupportNavigateUp()
     }
+
 }
