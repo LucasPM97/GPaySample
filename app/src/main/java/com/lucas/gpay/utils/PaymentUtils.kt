@@ -222,12 +222,19 @@ object PaymentsUtil {
      */
     @Throws(JSONException::class)
     private fun getTransactionInfo(price: String): JSONObject {
+
+        val displayItems = JSONArray().put(
+            Constants.ITEM_TO_DISPLAY
+                .put("price",price)
+        )
+
         return JSONObject().apply {
             put("totalPrice", price)
-            put("totalPriceLabel", "U'$'D $price")
+            put("totalPriceLabel", "Total")
             put("totalPriceStatus", "FINAL")
             put("countryCode", Constants.COUNTRY_CODE)
             put("currencyCode", Constants.CURRENCY_CODE)
+            put("displayItems", displayItems)
         }
     }
 

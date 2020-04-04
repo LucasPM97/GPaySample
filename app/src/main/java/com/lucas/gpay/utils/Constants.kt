@@ -1,8 +1,15 @@
 package com.lucas.gpay.utils
 
 import com.google.android.gms.wallet.WalletConstants
+import org.json.JSONObject
 
 object Constants {
+    val ITEM_TO_DISPLAY = JSONObject().apply {
+        put("label", "Total")
+        put("type", "LINE_ITEM")
+        put("price", "Total")
+    }
+
     /**
      * Changing this to ENVIRONMENT_PRODUCTION will make the API return chargeable card information.
      * Please refer to the documentation to read about the required steps needed to enable
