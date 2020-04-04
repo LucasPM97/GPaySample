@@ -33,7 +33,10 @@ class MainFragment : Fragment() {
         Picasso.get().load(viewModel.avatarUrl).transform(CropCircleTransformation()).into(avatar_image);
 
         donate_button.setOnClickListener {
-            findNavController().navigate(R.id.payFragment)
+
+            val action = MainFragmentDirections.actionMainFragmentToPayFragment();
+
+            findNavController().navigate(action)
         }
 
 

@@ -70,7 +70,9 @@ class MainActivity : AppCompatActivity() {
 
             Toast.makeText(this,"Success :D", Toast.LENGTH_LONG).show()
 
-            navController.navigate(R.id.action_completePayFragment_to_mainFragment3)
+            val action = CompletePayFragmentDirections.actionCompletePayFragmentToMainFragment3();
+
+            navController.navigate(action)
         }
         catch (ex:Exception){
             print(ex)
