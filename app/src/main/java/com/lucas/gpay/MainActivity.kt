@@ -10,9 +10,11 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.navigateUp
 import com.google.android.gms.wallet.AutoResolveHelper
 import com.google.android.gms.wallet.PaymentData
 import com.lucas.gpay.ui.completePay.CompletePayFragment
+import com.lucas.gpay.ui.completePay.CompletePayFragmentDirections
 import kotlinx.android.synthetic.main.fragment_complete_pay.*
 import org.json.JSONObject
 
@@ -67,6 +69,8 @@ class MainActivity : AppCompatActivity() {
             val paymentMethodData = JSONObject(paymentInformation).getJSONObject("paymentMethodData")
 
             Toast.makeText(this,"Success :D", Toast.LENGTH_LONG).show()
+
+            navController.navigate(R.id.action_completePayFragment_to_mainFragment3)
         }
         catch (ex:Exception){
             print(ex)
