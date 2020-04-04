@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="120dp"
         android:text="Complete donation"
-        android:textSize="25dp"
+        android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -37,9 +37,9 @@
             android:layout_gravity="center"
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
-            android:text="Donate $10 to me"
+            android:text="Donate $10 to this guy"
             android:textColor="@android:color/holo_blue_dark"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/avatar_image"
@@ -48,19 +48,32 @@
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:background="@drawable/avatar_background"
+            android:contentDescription="Github avatar"
             tools:src="@tools:sample/avatars" />
     </LinearLayout>
 
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:text="Pay with G Pay"
-        android:padding="30dp"
-        android:background="@drawable/button_background"
+    <include
+        android:id="@+id/googlePayButton"
+        layout="@layout/buy_with_googlepay_button"
+        android:layout_width="286dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="96dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        android:visibility="gone"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="349dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="58dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
