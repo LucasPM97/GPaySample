@@ -200,10 +200,10 @@ object PaymentsUtil {
         get() = JSONObject().put("merchantName", "Example Merchant")
 
     /**
-     * Creates an instance of [PaymentsClient] for use in an [Activity] using the
+     * Creates an instance of [PaymentsClient] for use in an [Context] using the
      * environment and theme set in [Constants].
      *
-     * @param activity is the caller's activity.
+     * @param context is the caller's context.
      */
     fun createPaymentsClient(context: Context): PaymentsClient {
         val walletOptions = Wallet.WalletOptions.Builder()
@@ -224,6 +224,7 @@ object PaymentsUtil {
     private fun getTransactionInfo(price: String): JSONObject {
         return JSONObject().apply {
             put("totalPrice", price)
+            put("totalPriceLabel", "U'$'D $price")
             put("totalPriceStatus", "FINAL")
             put("countryCode", Constants.COUNTRY_CODE)
             put("currencyCode", Constants.CURRENCY_CODE)
@@ -236,11 +237,11 @@ object PaymentsUtil {
      * @return Payment data expected by your app.
      * @see [PaymentDataRequest](https://developers.google.com/pay/api/android/reference/object.PaymentDataRequest)
      */
-    fun getPaymentDataRequest(price: String): JSONObject? {
+    fun getPaymentDataRequest(price: Int): JSONObject? {
         try {
             return JSONObject(baseRequest.toString()).apply {
                 put("allowedPaymentMethods", JSONArray().put(cardPaymentMethod()))
-                put("transactionInfo", getTransactionInfo(price))
+                put("transactionInfo", getTransactionInfo(price.toString()))
                 put("merchantInfo", merchantInfo)
 
             }

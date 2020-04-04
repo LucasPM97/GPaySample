@@ -56,11 +56,7 @@ class CompletePayFragment : Fragment() {
         Picasso.get().load(viewModel.getAvatarUrl()).transform(CropCircleTransformation())
             .into(avatar_image);
 
-        possiblyShowGooglePayButton()
-
-        googlePayButton.setOnClickListener { requestPayment() }
-
-
+        showGooglePayButtonIfIsReadyToPay()
     }
 
     private fun setObservers(){
@@ -82,7 +78,7 @@ class CompletePayFragment : Fragment() {
         }
     }
 
-    private fun possiblyShowGooglePayButton() {
+    private fun showGooglePayButtonIfIsReadyToPay() {
 
         val isReadyToPayJson = PaymentsUtil.isReadyToPayRequest() ?: return
         val request = IsReadyToPayRequest.fromJson(isReadyToPayJson.toString()) ?: return
@@ -103,6 +99,8 @@ class CompletePayFragment : Fragment() {
     private fun setGooglePayAvailable(available: Boolean) {
         if (available) {
             googlePayButton.visibility = View.VISIBLE
+            googlePayButton.setOnClickListener { requestPayment() }
+
         } else {
             Toast.makeText(
                 context,
@@ -118,70 +116,28 @@ class CompletePayFragment : Fragment() {
 
         // The price provided to the API should include taxes and shipping.
         // This price is not displayed to the user.
-        val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest(mountToPay.toString())
+        val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest(mountToPay)
         if (paymentDataRequestJson == null) {
             Log.e("RequestPayment", "Can't fetch payment data request")
             return
         }
-        val request = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
 
-        // Since loadPaymentData may show the UI asking the user to select a payment method, we use
-        // AutoResolveHelper to wait for the user interacting with it. Once completed,
-        // onActivityResult will be called with the result.
-        if (request != null) {
-            activity?.let {
-                AutoResolveHelper.resolveTask(
-                    paymentsClient.loadPaymentData(request), it, LOAD_PAYMENT_DATA_REQUEST_CODE)
-            }
-        }
-    }
+        try {
+            val request = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
 
-    /**
-     * Handle a resolved activity from the Google Pay payment sheet.
-     *
-     * @param requestCode Request code originally supplied to AutoResolveHelper in requestPayment().
-     * @param resultCode Result code returned by the Google Pay API.
-     * @param data Intent from the Google Pay API containing payment or error data.
-     * @see [Getting a result
-     * from an Activity](https://developer.android.com/training/basics/intents/result)
-     */
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            // value passed in AutoResolveHelper
-            LOAD_PAYMENT_DATA_REQUEST_CODE -> {
-                when (resultCode) {
-                    Activity.RESULT_OK ->
-                        data?.let { intent ->
-                            PaymentData.getFromIntent(intent)?.let(::handlePaymentSuccess)
-                        }
-                    Activity.RESULT_CANCELED -> {
-                        // Nothing to do here normally - the user simply cancelled without selecting a
-                        // payment method.
-                    }
-
-                    AutoResolveHelper.RESULT_ERROR -> {
-                        AutoResolveHelper.getStatusFromIntent(data)?.let {
-                            handleError(it.statusCode)
-                        }
-                    }
+            // Since loadPaymentData may show the UI asking the user to select a payment method, we use
+            // AutoResolveHelper to wait for the user interacting with it. Once completed,
+            // onActivityResult will be called with the result.
+            if (request != null) {
+                activity?.let {
+                    AutoResolveHelper.resolveTask(
+                        paymentsClient.loadPaymentData(request), it, LOAD_PAYMENT_DATA_REQUEST_CODE)
                 }
-                // Re-enables the Google Pay payment button.
-                googlePayButton.isClickable = true
             }
         }
-    }
-
-    private fun handlePaymentSuccess(paymentData: PaymentData) {
-        val paymentInformation = paymentData.toJson() ?: return
-        val paymentMethodData = JSONObject(paymentInformation).getJSONObject("paymentMethodData")
-
-        Toast.makeText(context,"Success :D", Toast.LENGTH_LONG)
+        catch (ex:Exception){
+            print(ex)
+        }
 
     }
-
-    private fun handleError(statusCode: Int) {
-        Toast.makeText(context,"Failed D:", Toast.LENGTH_LONG)
-        Log.w("loadPaymentData failed", String.format("Error code: %d", statusCode))
-    }
-
 }
