@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.lucas.gpay.R
 import com.squareup.picasso.Picasso
@@ -33,7 +34,11 @@ class MainFragment : Fragment() {
         Picasso.get().load(viewModel.avatarUrl).transform(CropCircleTransformation()).into(avatar_image);
 
         donate_button.setOnClickListener {
-            findNavController().navigate(R.id.payFragment)
+
+            val extras = FragmentNavigatorExtras(avatar_image to "avatar_image")
+
+            val action = MainFragmentDirections.actionMainFragmentToPayFragment();
+            findNavController().navigate(action,extras)
         }
 
 

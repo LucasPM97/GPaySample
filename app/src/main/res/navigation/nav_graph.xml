@@ -11,7 +11,7 @@
         tools:layout="@layout/main_fragment" >
         <action
             android:id="@+id/action_mainFragment_to_payFragment"
-            app:destination="@id/payFragment" />
+            app:destination="@id/payFragment"/>
     </fragment>
     <fragment
         android:id="@+id/payFragment"
@@ -20,7 +20,11 @@
         tools:layout="@layout/fragment_pay" >
         <action
             android:id="@+id/action_payFragment_to_completePayFragment"
-            app:destination="@id/completePayFragment" />
+            app:destination="@id/completePayFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/completePayFragment"
@@ -34,7 +38,11 @@
         <action
             android:id="@+id/action_completePayFragment_to_mainFragment3"
             app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainFragment" />
+            app:popUpTo="@id/mainFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
 </navigation>
