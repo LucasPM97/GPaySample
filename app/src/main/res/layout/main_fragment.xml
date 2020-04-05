@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/avatar_image"
+        android:transitionName="avatar_image"
         android:background="@drawable/avatar_background"
         android:layout_width="190dp"
         android:layout_height="190dp"

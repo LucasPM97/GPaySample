@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.lucas.gpay.R
 import com.squareup.picasso.Picasso
@@ -34,9 +35,10 @@ class MainFragment : Fragment() {
 
         donate_button.setOnClickListener {
 
-            val action = MainFragmentDirections.actionMainFragmentToPayFragment();
+            val extras = FragmentNavigatorExtras(avatar_image to "avatar_image")
 
-            findNavController().navigate(action)
+            val action = MainFragmentDirections.actionMainFragmentToPayFragment();
+            findNavController().navigate(action,extras)
         }
 
 

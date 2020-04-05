@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import com.lucas.gpay.R
 import com.lucas.gpay.ui.completePay.CompletePayFragmentDirections
 import com.squareup.picasso.Picasso
@@ -23,6 +24,11 @@ class PayFragment : Fragment() {
     private lateinit var viewModel: PayViewModel
     private var mountToPay: Int = 0
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
